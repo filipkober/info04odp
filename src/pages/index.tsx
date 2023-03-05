@@ -38,7 +38,7 @@ const Home: NextPage = () => {
     const getPytania = async () => {
       const res = await fetch("/api/questions");
       const pytania = (await res.json()) as pytania[];
-      setPytania(pytania);
+      setPytania(pytania as Pytanie[]);
     };
     void getPytania();
   }, []);
