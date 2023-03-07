@@ -63,7 +63,7 @@ const Home: NextPage = () => {
           Odpowiedzi do testu inf04
         </h1>
         <div>
-        <a href="/extension.xpi" download className="w-[38px] h-[38px] border-2 border-white rounded-md absolute top-8 right-10" >
+        <a href="/api/extension" className="w-[38px] h-[38px] border-2 border-white rounded-md absolute top-8 right-10" >
           <MdExtension className="text-6xl text-white hover:cursor-pointer w-full h-full" />
         </a>
         </div>
