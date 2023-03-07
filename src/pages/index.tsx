@@ -18,9 +18,11 @@ const Home: NextPage = () => {
   const [search, setSearch] = useState<string>("");
   const input = useRef<HTMLInputElement>(null);
   const [isFirefox, setIsFirefox] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   useEffect(() => {
     setIsFirefox(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)
+    setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
   }, [])
 
   const strings = [
@@ -48,6 +50,7 @@ const Home: NextPage = () => {
       setPytania(pytania as Pytanie[]);
     };
     void getPytania();
+    console.log("Autor: Filip Kober");
   }, []);
 
   let pytaniaDoWyswietlenia: Pytanie[] = [];
@@ -65,23 +68,23 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-[#0b0217] to-[#0f101d] overflow-visible">
-        <h1 className="my-4 text-7xl font-bold text-white">
+        <h1 className="my-4 text-3xl md:text-5xl lg:text-7xl font-bold text-white">
           Odpowiedzi do testu inf04
         </h1>
-       {isFirefox && <div>
-        <Link href="/api/extension" className="w-[38px] h-[38px] border-2 border-white rounded-md absolute top-8 right-10" >
+       {(!isMobile && isFirefox) && <div>
+        <Link href="/api/extension" className="w-[38px] h-[38px] border-2 border-white rounded-md absolute top-8 right-10 hidden md:inline-block" >
           <MdExtension className="text-6xl text-white hover:cursor-pointer w-full h-full" />
         </Link>
         </div>}
-        <div className="relative my-20 h-16 w-1/2">
+        <div className="relative my-20 h-16 w-3/4 lg:w-2/3">
           <div
-            className={`duration-250 inset-0 z-0 -my-16 h-full w-full bg-gradient-to-r from-pink-600 to-purple-900 transition ease-in-out ${
+            className={`duration-250 inset-0 z-0 -my-11 md:-my-16 h-2/3 md:h-full w-full bg-gradient-to-r from-pink-600 to-purple-900 transition ease-in-out ${
               isInputHovered ? "blur-xl hue-rotate-15" : "blur-lg"
             }`}
           ></div>
           <input
             type="text"
-            className="absolute z-10 h-full w-full truncate rounded-md border-[1px] border-gray-300 bg-black px-3 text-4xl text-white shadow-inner focus:border-2 focus:border-white focus:outline-none"
+            className="absolute z-10 h-2/3 md:h-full w-full truncate rounded-md border-[1px] border-gray-300 bg-black px-3 text-xl md:text-3xl lg:text-4xl text-white shadow-inner focus:border-2 focus:border-white focus:outline-none"
             placeholder={text}
             onMouseEnter={() => setIsInputHovered(true)}
             onMouseLeave={() => setIsInputHovered(false)}
@@ -92,7 +95,7 @@ const Home: NextPage = () => {
           />
           {!!search ? (
             <GiCancel
-              className="relative z-20 ml-[92%] h-full w-[5%] hover:cursor-pointer"
+              className="relative z-20 ml-[90%] md:ml-[92%] lg:ml-[94%] h-full w-[8%] md:w-[5%] pb-5 md:pb-0 hover:cursor-pointer"
               onClick={() => {
                 setSearch("")
                 void input.current?.focus()
@@ -101,12 +104,12 @@ const Home: NextPage = () => {
             />
           ) : (
             <FaSearch
-              className="pointer-events-none relative z-20 ml-[92%] h-full w-[5%]"
+              className="pointer-events-none relative z-20 ml-[90%] md:ml-[92%] lg:ml-[94%] h-full w-[8%] md:w-[5%] pb-5 md:pb-0"
               color="white"
             />
           )}
         </div>
-        <div className="-my-16 w-1/2">
+        <div className="-my-32 md:-my-28 lg:-my-18 w-3/4 lg:w-2/3">
           {pytaniaDoWyswietlenia.map((pytanie) => {
             return <QuestionCard pytanie={pytanie} key={pytanie.id} />;
           })}

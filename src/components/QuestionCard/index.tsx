@@ -7,7 +7,7 @@ const QuestionCard = ({pytanie}: {pytanie: Pytanie}) => {
             <h2 className="text-center text-xl font-bold mb-5">{pytanie.tresc}</h2>
             <p className={`text-xl text-gray-300 ${pytanie.zdjecie ? 'mb-5' : ''}`}>Odpowiedź: <span className="text-lime-500">{pytanie.odpowiedz}</span></p>
             {!!pytanie.zdjecie && (
-                <div className="w-full max-h-20vh overflow-hidden rounded-md">
+                <div className="w-full max-h-[20vh] md:max-h-[30vh] lg:max-h-[35vh] overflow-hidden rounded-md aspect-auto">
                 <Image alt="obrazek do pytania" src={pytanie.zdjecie} width={1000} height={500} loader={() => pytanie.zdjecie || ""} />
                 </div>
             )
