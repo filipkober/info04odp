@@ -10,12 +10,18 @@ import { MdExtension } from "react-icons/md";
 import QuestionCard from "~/components/QuestionCard";
 import { type pytania } from "@prisma/client";
 import Fuse from "fuse.js";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const [pytania, setPytania] = useState<Pytanie[]>([]);
   const [isInputHovered, setIsInputHovered] = useState(false);
   const [search, setSearch] = useState<string>("");
   const input = useRef<HTMLInputElement>(null);
+  const [isFirefox, setIsFirefox] = useState(false);
+  
+  useEffect(() => {
+    setIsFirefox(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)
+  }, [])
 
   const strings = [
     "Co można powiedzieć o metodach klasy Point?",
@@ -62,11 +68,11 @@ const Home: NextPage = () => {
         <h1 className="my-4 text-7xl font-bold text-white">
           Odpowiedzi do testu inf04
         </h1>
-        <div>
-        <a href="/api/extension" className="w-[38px] h-[38px] border-2 border-white rounded-md absolute top-8 right-10" >
+       {isFirefox && <div>
+        <Link href="/api/extension" className="w-[38px] h-[38px] border-2 border-white rounded-md absolute top-8 right-10" >
           <MdExtension className="text-6xl text-white hover:cursor-pointer w-full h-full" />
-        </a>
-        </div>
+        </Link>
+        </div>}
         <div className="relative my-20 h-16 w-1/2">
           <div
             className={`duration-250 inset-0 z-0 -my-16 h-full w-full bg-gradient-to-r from-pink-600 to-purple-900 transition ease-in-out ${
